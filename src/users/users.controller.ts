@@ -17,18 +17,18 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  create(@Body() user: CreateUserDto) {
+    return this.usersService.addUser(user);
   }
 
   @Get()
-  findAll(): User[] {
-    return this.usersService.findAll();
+  findAll(): Promise<User[]> {
+    return this.usersService.getUsers();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+    return this.usersService.getUser(id);
   }
 
   @Patch(':id')
@@ -38,6 +38,6 @@ export class UsersController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
+    return this.usersService.deleteUser(id);
   }
 }
