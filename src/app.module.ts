@@ -9,7 +9,7 @@ import { UsersModule } from './users/users.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),
-    MongooseModule.forRoot(process.env.DB_URI),
+    MongooseModule.forRoot('mongodb://localhost:27017/aae_nestDB'),
     ProductsModule,
     UsersModule,
   ],
