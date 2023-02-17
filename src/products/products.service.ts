@@ -16,19 +16,32 @@ export class ProductsService {
     return newProduct;
   }
 
-  findAll() {
-    return `This action returns all products`;
+  getProducts() {
+    return this.productModel.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  getProduct(id: string) {
+    return this.productModel.findById(id);
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  async updateProduct(id: string, updateProductDto: UpdateProductDto) {
+    const prod = await this.productModel.findById(id);
+    if (!prod)
+      return { status: 'ERROR', message: `Product ID ${id} no existe` };
+
+    const updatedProd = await this.productModel.findByIdAndUpdate(
+      id,
+      updateProductDto,
+      { new: true },
+    );
+    return updatedProd;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async deleteProduct(id: string) {
+    const prod = await this.productModel.findById(id);
+    if (!prod)
+      return { status: 'ERROR', message: `Product ID ${id} no existe` };
+
+    return await this.productModel.findByIdAndDelete(id);
   }
 }
